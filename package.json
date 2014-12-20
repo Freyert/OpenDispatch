@@ -1,0 +1,27 @@
+{
+  "name": "OpenDispatch",
+  "version": "1.0.0",
+  "description": "A dispatching system that efficiently matches drivers with riders.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Freyert/OpenDispatch.git"
+  },
+  "keywords": [
+    "accesibility",
+    "maps"
+  ],
+  "author": "Fulton Byrne, and Connor Hamlet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Freyert/OpenDispatch/issues"
+  },
+  "homepage": "https://github.com/Freyert/OpenDispatch",
+  "dependencies": {
+    "express": "^4.10.6",
+    "swagger-node-express": "^2.1.3"
+  }
+}
