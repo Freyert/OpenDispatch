@@ -24,13 +24,21 @@ exports.findRiderById = function(swagger, Rider) {
       },
       'action': function(req, res) {
         if(!req.params.riderId) {
-          throw swagger.errors.invalid('id');
+          throw console.log("Invalid ID");
         }
         else {
-          var id = parseInt(req.params.petId);
-          console.log(id);
-        //  var rider;
-      //    Rider.find({ id: id}, function (result) { rider = result; });    
+          var id = parseInt(req.params.riderId);
+          var sendRider = function (err, docs) {
+                  if (docs) {
+                    res.send(JSON.stringify(docs));
+                  }
+                  else {
+                    res.send(err);
+                  }
+          }
+
+          Rider.find({pid: id}, sendRider);
+
         }
       }
   };
