@@ -43,3 +43,29 @@ exports.findRiderById = function(swagger, Rider) {
       }
   };
 };
+
+exports.postRider = function (swagger, Rider) {
+  return {
+    "spec": {
+      "description": "Posts a new Rider",
+      "path": "/rider",
+      "notes": "Adds a new Rider to the Database",
+      "summary": "Post a new Rider to the Database",
+      "method": "POST",
+      "parameters": [swagger.paramTypes.body("body", "Rider object to be added", "Rider")],
+      "type": "Rider",
+      "errorResponses": [swagger.errors.invalid('id')],
+      "nickname": "postRider"
+    },
+    "action": function(req, res) {
+      console.log(req.body);
+      var rider = new Rider(req.body);
+      rider.save(function (err) {
+        if(err) {
+          res.send(err);
+        }
+        else res.status(200).end();
+      })
+    }
+  }
+}

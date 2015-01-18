@@ -10,14 +10,22 @@ Route:
   fuel.
 */
 module.exports = function (mongoose) {
+  var errorRequired = ' is required!';
   var schema = new mongoose.Schema(
                                 {
-                                  pid: { type: Number, unique: true},
-                                  firstName: String,
-                                  lastName: String,
-                                  latitude: Number,
-                                  longitude: Number,
-                                  requestStart: Date
+                                  pid: { 
+                                        type: Number,
+                                        unique: true,
+                                        required: '{pid}' + errorRequired
+                                  },
+                                  firstName: {
+                                              type: String,
+                                              required: 'firstName' + errorRequired 
+                                  },
+                                  lastName: {
+                                              type: String,
+                                              required: '{lastName}' + errorRequired
+                                  }
                                 });
   
   return mongoose.model('Rider', schema);

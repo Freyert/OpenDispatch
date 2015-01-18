@@ -1,7 +1,39 @@
 var mongoose = require('mongoose');
 var riderModel = require('../models/rider.js');
-
+var rideModel = require('../models/ride.js');
 describe('Models', function() {
+          var Rider;
+          var Ride;
+
+          afterAll(function (done) {
+            dbDrop();
+            done();
+          });
+
+          beforeAll(function(done) {
+            mongoose.connect('mongodb://localhost/test');
+            mongoose.connection.on('open', function (err, result) {
+              if (err) throw err;
+              else {
+                Rider = riderModel(mongoose);
+                Ride = rideModel(mongoose);
+              }
+              done();
+            });
+          });
+
+
+
+        function dbCleanse(model, done) {
+             model.remove({}, function(err, result) {
+              if(err) throw err;
+              done();
+            });         
+        }
+
+        function dbDrop() {
+          mongoose.connection.db.dropDatabase();
+        }
 
         function emptyTest(model, done) {
           model.find({}, function(err, results) {
@@ -49,8 +81,6 @@ describe('Models', function() {
             });
         }
         describe('Riders: models', function () {
-          var db;
-          var Rider;
           var rider1 = {
                           pid: 720075201,
                           firstName: "Fulton",
@@ -69,25 +99,11 @@ describe('Models', function() {
                         };
 
 
-          beforeAll(function(done) {
-            mongoose.connect('mongodb://localhost/test');
-            mongoose.connection.on('open', function (err, result) {
-              if (err) throw err;
-              else {
-                Rider = riderModel(mongoose);
-              }
-              done();
-            });
-          });
-
           afterEach(function(done) {
-            Rider.remove({}, function(err, result) {
-              if(err) throw err;
-              else done();
-            });
+            dbCleanse(Rider, done);
           });
 
-          it('should have mongoose and rider model', function() {
+         it('should have mongoose and rider model', function() {
             expect(mongoose).not.toBe(undefined);
             expect(riderModel).not.toBe(undefined);
           });
@@ -107,5 +123,41 @@ describe('Models', function() {
           it('should not allow duplicate PIDs', function(done) {
             duplicatesTest(rider1, Rider, "pid",  done);
           });
+        });
+
+        describe('Ride: models', function () {
+          var ride1 = {
+              pid: 720075201,
+              firstName: 'Fulton',
+              lastName: 'Byrne',
+              start: {
+                time: Date.now(),
+                latitude: 5,
+                longitude: 5
+              },
+              end: {
+                time:Date.now(),
+                latitude: 6,
+                longitude: 6
+              }
+          }
+
+          afterEach(function (done) {
+            dbCleanse(Ride, done);
+          });
+
+          it('should have mongoose and ride model', function() {
+            expect(mongoose).not.toBe(undefined);
+            expect(rideModel).not.toBe(undefined);
+          });
+
+          it('should have an empty collection "rides"', function(done) {
+            emptyTest(Ride, done);
+          });
+
+          it('should have one ride after saving', function(done) {
+            singletonTest(ride1, Ride, done);
+          });
+
         });
 });

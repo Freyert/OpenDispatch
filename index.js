@@ -7,10 +7,11 @@ var swagsources = require("./swagger/swagresources.js");
 var mongoose = require("mongoose");
 var riderModel = require("./models/rider.js");
 
+var PORT = 8002
+
 //EXPRESS CONFIGURATION
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(function (req, res, next) {
   console.log(Date.now() + ": " + req.path);
   next();
@@ -31,7 +32,9 @@ db.once('open', function() {
        //ROUTES
         swagger.configureSwaggerPaths("", "/api-docs", "");
         swagger.addGet(swagsources.findRiderById(swagger, Rider));
+        swagger.addPost(swagsources.postRider(swagger, Rider));
 
-        swagger.configure("http://localhost:8002", "0.1");
-        app.listen(8002);
+        swagger.configure("http://localhost:" + PORT, "0.1");
+        app.listen(PORT);
+        console.log("Listening on " + PORT);
 });
