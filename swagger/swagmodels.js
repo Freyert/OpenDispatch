@@ -63,6 +63,45 @@ exports.models = {
         "type": "Position"
       }
     }
+  },
+  "Driver": {
+    "id": "Rider",
+    "required": ["did", "firstName", "lastName",
+                 "checkIn", "checkOut", "weeklyHours"],
+    "properties": {
+      "did": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Driver unique identifier",
+        "minimum": "0.0",
+        "maximum": "4294967295.0"
+      },
+      "firstName": {
+        "type": "string",
+        "description": "Driver's first name."
+      },
+      "lastName": {
+        "type": "string",
+        "description": "Driver's last name."
+      },
+      "checkIn": {
+        "type": "string",
+        "format": "date-time",
+        "description": "The time a driver signed in for work",
+      },
+      "checkOut": {
+        "type": "string",
+        "format": "date-time",
+        "description": "The time a driver signed out from work last."
+                      + "NULL if currently driving."
+      },
+      "weeklyHours": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Number of hours a driver has driven during a week."
+        "min": "0.0",
+        "max": "60"
+      }
+    }
   }
 }
-

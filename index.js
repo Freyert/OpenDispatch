@@ -3,9 +3,15 @@ var url = require("url");
 var bodyParser = require("body-parser");
 var swagger = require("swagger-node-express");
 var swagmodels = require("./swagger/swagmodels.js");
-var swagsources = require("./swagger/swagresources.js");
 var mongoose = require("mongoose");
-var riderModel = require("./models/rider.js");
+
+//Resources and Models
+var swaggerPath = "./swagger/";
+var modelPath = "./models/";
+var riderResource = require(swaggerPath + "riderResource.js");
+var driverResource = require(swaggerPath + "driverResource.js");
+var riderModel = require(modelPath + "rider.js");
+var driverModel = require(modelPath + "drivers.js");
 
 const PORT = 8002
 const HOST = 'http://localhost:' + PORT;
@@ -36,8 +42,8 @@ db.once('open', function() {
         var Rider = riderModel(mongoose);
        //ROUTES
         swagger.configureSwaggerPaths("", "/api-docs", "");
-        swagger.addGet(swagsources.findRiderById(swagger, Rider));
-        swagger.addPost(swagsources.postRider(swagger, Rider));
+        swagger.addGet(riderResource.findRiderById(swagger, Rider));
+        swagger.addPost(riderResource.postRider(swagger, Rider));
 
         swagger.configure(HOST, "0.1");
         app.listen(PORT);
