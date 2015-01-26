@@ -1,7 +1,7 @@
 /**
 Dependency Inject Swagger and Database Reference into the Resources.
 */
-exports.findRiderById = function(swagger, Rider) {
+exports.findById = function(swagger, Rider) {
   return {
     'spec': {
       "description": "Selects Riders by id",

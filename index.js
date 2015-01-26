@@ -40,10 +40,13 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
         console.log("DB connected");
         var Rider = riderModel(mongoose);
+        var Driver = driverModel(mongoose);
        //ROUTES
         swagger.configureSwaggerPaths("", "/api-docs", "");
-        swagger.addGet(riderResource.findRiderById(swagger, Rider));
+        swagger.addGet(riderResource.findById(swagger, Rider));
         swagger.addPost(riderResource.postRider(swagger, Rider));
+
+        swagger.addGet(driverResource.findById(swagger, Driver));
 
         swagger.configure(HOST, "0.1");
         app.listen(PORT);
