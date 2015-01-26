@@ -9,7 +9,7 @@ var riderModel = require("./models/rider.js");
 
 const PORT = 8002
 const HOST = 'http://localhost:' + PORT;
-const MONGO_HOST = 'mongodb://192.168.59.103/27017';
+const MONGO_HOST = 'mongodb://localhost/27017';
 
 //EXPRESS CONFIGURATION
 var app = express();
