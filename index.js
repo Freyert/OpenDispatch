@@ -6,10 +6,11 @@ var swagmodels = require("./swagger/swagmodels.js");
 var swagsources = require("./swagger/swagresources.js");
 var mongoose = require("mongoose");
 var riderModel = require("./models/rider.js");
+var rideModel = require("./models/ride.js");
 
 const PORT = 8002
 const HOST = 'http://localhost:' + PORT;
-const MONGO_HOST = 'mongodb://192.168.59.103/27017';
+const MONGO_HOST = 'mongodb://localhost/27017';
 
 //EXPRESS CONFIGURATION
 var app = express();
@@ -34,11 +35,15 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
         console.log("DB connected");
         var Rider = riderModel(mongoose);
+        var Ride = rideModel(mongoose);
        //ROUTES
         swagger.configureSwaggerPaths("", "/api-docs", "");
         swagger.addGet(swagsources.findRiderById(swagger, Rider));
+        swagger.addGet(swagsources.getRides(swagger, Ride));
+        swagger.addGet(swagsources.getRideByRiderId(swagger, Ride));
         swagger.addPost(swagsources.postRider(swagger, Rider));
-
+        swagger.addPost(swagsources.postRide(swagger, Ride, Rider));
+        swagger.addDelete(swagsources.endRide(swagger, Ride));
         swagger.configure(HOST, "0.1");
         app.listen(PORT);
         console.log("Running at " + HOST);
