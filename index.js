@@ -24,9 +24,15 @@ app.use(function(err, req, res, next){
   console.error(err.stack);
   next(err);
 });
+app.set('view engine', 'jade');
 //SWAGGER CONFIGURATION
 swagger.setAppHandler(app);
 swagger.addModels(swagmodels);
+
+//UI Service
+app.get('/', function(req, res) {
+  res.render('rideRequest');
+});
 
 //MONGOOSE CONFIGURATION
 mongoose.connect(MONGO_HOST);

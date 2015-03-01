@@ -1,0 +1,17 @@
+- var siteTitle = 'Open Dispatch'
+doctype html
+html(lang="en")
+  head
+    title=siteTitle
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+  body
+    .container-fluid
+      .row
+        .col-md-12
+          h1=siteTitle
+      block content
+  script(src="http://localhost:9966/static/bundle.js",
+        type="text/javascript")
+
+

@@ -11,7 +11,7 @@ function sendDocs(err, docs) {
     this.send(JSON.stringify(docs));
   }
   else {
-    this.send(err);
+    this.status(404).send(err);
   }
 };
 
@@ -45,7 +45,7 @@ exports.findRiderById = function(swagger, Rider) {
           var id = parseInt(req.params.riderId);
           var sendRider = sendDocs.bind(res);
 
-          Rider.find({pid: id}, sendRider);
+          Rider.findOne({pid: id}, sendRider);
 
         }
       }
