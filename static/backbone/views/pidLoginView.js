@@ -26,7 +26,7 @@ module.exports = Backbone.View.extend({
 
   validate: function(user) {
     if (user) {
-      console.log(user);
+      location.hash = '/waiting';
     } else {
       console.log("User not found.");
     }
