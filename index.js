@@ -29,9 +29,13 @@ app.set('view engine', 'jade');
 swagger.setAppHandler(app);
 swagger.addModels(swagmodels);
 
-//UI Service
+//UI ROUTES
 app.get('/', function(req, res) {
   res.render('rideRequest');
+});
+
+app.get('/dispatch', function(req, res) {
+  res.render('dispatch');
 });
 
 //MONGOOSE CONFIGURATION
@@ -42,7 +46,7 @@ db.once('open', function() {
         console.log("DB connected");
         var Rider = riderModel(mongoose);
         var Ride = rideModel(mongoose);
-       //ROUTES
+       //REST ROUTES
         swagger.configureSwaggerPaths("", "/api-docs", "");
         swagger.addGet(swagsources.findRiderById(swagger, Rider));
         swagger.addGet(swagsources.getRides(swagger, Ride));

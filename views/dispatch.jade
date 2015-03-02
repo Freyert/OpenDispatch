@@ -1,0 +1,10 @@
+extends ./base
+block content
+  .row
+    .col-md-12
+      h1 Dispatch
+  .row
+    .col-md-12
+      #map-canvas(style="width: 100%; height: 100%;")
+block scripts
+  script(src='http://localhost:9966/static/dispatch.js', type='text/javascript')
