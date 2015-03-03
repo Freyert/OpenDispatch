@@ -3,8 +3,10 @@ var $ = require('jquery');
 require('../jqConfig')();
 Backbone.$ = $;
 
-var DispatchView = require('./dispatchView');
-
+var MapView = require('./views/mapView');
+var ListView = require('./views/listView');
+var Rides = require('./collections/rides');
 $(document).ready(function() {
-  var dispatchView = new DispatchView();
+  var mapView = new MapView();
+  var listView = new ListView({collection: new Rides()});
 });

@@ -20,13 +20,34 @@ module.exports = Backbone.View.extend({
 
   submit: function() {
     if (this.pidInput.checkValidity()) {
-      $.get("/rider/" + this.pidInput.value, this.validate);
+      var pid = this.pidInput.value;
+      $.get("/rider/" + pid, this.validate);
     }
   },
 
   validate: function(user) {
+    function postRide(position) {
+      var data = {
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude
+      };
+      function success() {
+        location.hash = 'waiting';
+      };
+
+      $.ajax({
+        type: "POST",
+        url: '/rides/' + user.pid,
+        processData: false,
+        contentType:'application/json',
+        data: JSON.stringify(data),
+        success: success
+      });
+    }
+
     if (user) {
       location.hash = '/waiting';
+      navigator.geolocation.getCurrentPosition(postRide);
     } else {
       console.log("User not found.");
     }
