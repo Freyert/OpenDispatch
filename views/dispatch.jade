@@ -1,0 +1,15 @@
+extends ./base
+include ./config
+block content
+  .row
+    .col-md-12
+      h1 Dispatch
+  .row(style="height:100%;")
+    .col-md-4(style="height: 100%;")
+      .row
+        h2 RIDES
+      .row
+        ul#ride-list
+    .col-md-8#map-canvas(style="height: 100%;")
+block scripts
+  script(src='http://localhost:9966/static/dispatch.js', type='text/javascript')

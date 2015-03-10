@@ -33,7 +33,7 @@ module.exports = function (mongoose) {
                                     required: '{lastName}' + errorRequired
                                   },
                                   start: position,
-                                  end: position
+                                  //end: position
                                 }
   );
   return mongoose.model('Ride', schema);

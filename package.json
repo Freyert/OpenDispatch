@@ -4,6 +4,8 @@
   "description": "A dispatching system that efficiently matches drivers with riders.",
   "main": "index.js",
   "scripts": {
+    "start:client": "beefy static/backbone/riderApp/index.js:static/rider.js --live",
+    "start:dispatch": "beefy static/backbone/dispatchApp/index.js:static/dispatch.js --live",
     "test": "node ./test/conf.js"
   },
   "repository": {
@@ -21,12 +23,19 @@
   },
   "homepage": "https://github.com/Freyert/OpenDispatch",
   "dependencies": {
+    "backbone": "^1.1.2",
     "body-parser": "^1.10.0",
     "express": "^4.10.6",
+    "google-maps": "^2.1.1",
+    "jade": "^1.9.2",
+    "jquery": "^2.1.3",
     "mongoose": "^3.8.21",
-    "swagger-node-express": "^2.1.3"
+    "swagger-node-express": "^2.1.3",
+    "underscore": "^1.8.2"
   },
   "devDependencies": {
+    "beefy": "^2.1.3",
+    "browserify": "^9.0.3",
     "glob": "^4.3.2",
     "gulp": "^3.8.10",
     "jasmine-reporters": "^1.0.1"

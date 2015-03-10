@@ -12,6 +12,7 @@ var riderResource = require(swaggerPath + "riderResource.js");
 var driverResource = require(swaggerPath + "driverResource.js");
 var riderModel = require(modelPath + "rider.js");
 var driverModel = require(modelPath + "drivers.js");
+var rideModel = require(modelPath + "ride.js");
 
 const PORT = 8002
 const HOST = 'http://localhost:' + PORT;
@@ -29,9 +30,19 @@ app.use(function(err, req, res, next){
   console.error(err.stack);
   next(err);
 });
+app.set('view engine', 'jade');
 //SWAGGER CONFIGURATION
 swagger.setAppHandler(app);
 swagger.addModels(swagmodels);
+
+//UI ROUTES
+app.get('/', function(req, res) {
+  res.render('rideRequest');
+});
+
+app.get('/dispatch', function(req, res) {
+  res.render('dispatch');
+});
 
 //MONGOOSE CONFIGURATION
 mongoose.connect(MONGO_HOST);
@@ -39,15 +50,26 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
         console.log("DB connected");
+        //REST ROUTES
         var Rider = riderModel(mongoose);
+        swagger.addGet(swagsources.findRiderById(swagger, Rider));
+        swagger.addPost(swagsources.postRider(swagger, Rider));
+        swagger.addPost(swagsources.postRide(swagger, Ride, Rider));
+
+
         var Driver = driverModel(mongoose);
-       //ROUTES
-        swagger.configureSwaggerPaths("", "/api-docs", "");
+        swagger.addGet(driverResource.findById(swagger, Driver));
         swagger.addGet(riderResource.findById(swagger, Rider));
         swagger.addPost(riderResource.postRider(swagger, Rider));
 
-        swagger.addGet(driverResource.findById(swagger, Driver));
 
+        var Ride = rideModel(mongoose);
+        swagger.addGet(swagsources.getRides(swagger, Ride));
+        swagger.addGet(swagsources.getRideByRiderId(swagger, Ride));
+        swagger.addDelete(swagsources.endRide(swagger, Ride));
+
+        //HOST CONFIGURATION
+        swagger.configureSwaggerPaths("", "/api-docs", "");
         swagger.configure(HOST, "0.1");
         app.listen(PORT);
         console.log("Running at " + HOST);

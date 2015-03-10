@@ -1,5 +1,6 @@
-#Swap files
+# Swap Files
 *.swp
+*~
 
 # Logs
 logs
