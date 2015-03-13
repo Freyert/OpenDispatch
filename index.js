@@ -33,25 +33,26 @@ const MONGO_HOST = 'mongodb://localhost/27017';
 //EXPRESS CONFIGURATION
 var app = express();
 app.use(bodyParser.json());
+app.set('view engine', 'jade');
+
+//ERROR HANDLING
 app.use(function (req, res, next) {
   console.log(Date.now() + ": " + req.path);
   next();
 });
-app.use('/swaggerui', express.static(__dirname + '/swagger/dist'));
 app.use(function(err, req, res, next){
   console.error(err.stack);
   next(err);
 });
-app.set('view engine', 'jade');
 //SWAGGER CONFIGURATION
 swagger.setAppHandler(app);
 swagger.addModels(swagmodels);
 
 //UI ROUTES
+app.use('/swaggerui', express.static(__dirname + '/swagger/dist'));
 app.get('/', function(req, res) {
   res.render('rideRequest');
 });
-
 app.get('/dispatch', function(req, res) {
   res.render('dispatch');
 });
