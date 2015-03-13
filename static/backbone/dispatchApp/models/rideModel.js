@@ -4,5 +4,6 @@ Backbone.$ = $;
 
 module.exports = Backbone.Model.extend({
   urlRoot: '/rides',
-  idAttribute: 'pid'
+  idAttribute: 'pid',
+  selected: false
 });

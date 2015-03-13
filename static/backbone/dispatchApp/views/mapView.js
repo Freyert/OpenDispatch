@@ -16,12 +16,11 @@ module.exports = Backbone.View.extend({
       var map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
       this.render = this.render.bind(this, google, map);
+      this.center = this.center.bind(this, map);
       //google.map.event.addDomListener(window, 'load', initialize);
-      this.listenTo(this.collection, 'change', this.render);
-      //This here is a hack to get it to work now.
-      //TODO: Collections should be preloaded.
-      this.collection.fetch();
-      this.render();
+      this.collection.on('sync', this.render, this);
+      this.collection.on('change:selected', this.center, this);
+      this.render();//in case sync already happened.
     }.bind(this);
     GoogleMapLoader.load(init);
   },
@@ -37,5 +36,13 @@ module.exports = Backbone.View.extend({
       });
       console.log(marker);
     });
+  },
+
+  center: function(map, model) {
+    var latitude = model.get('start').latitude;
+    var longitude = model.get('start').longitude;
+    var latLng = { lat: latitude, lng: longitude };
+    map.panTo(latLng);
+    map.setZoom(15);
   }
 });

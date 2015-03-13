@@ -32,7 +32,7 @@ module.exports = Backbone.View.extend({
         latitude: position.coords.latitude
       };
       function success() {
-        location.hash = 'waiting';
+        location.hash = '/waiting';
       };
 
       $.ajax({
@@ -46,7 +46,6 @@ module.exports = Backbone.View.extend({
     }
 
     if (user) {
-      location.hash = '/waiting';
       navigator.geolocation.getCurrentPosition(postRide);
     } else {
       console.log("User not found.");
