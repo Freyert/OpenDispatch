@@ -7,7 +7,7 @@ exports.findById = function(swagger, Driver) {
   return {
     "spec": {
       "description": "Selects Drivers by DID",
-      "path": "driver/{driverId}",
+      "path": "/driver/{driverId}",
       "notes": "Returns a Driver basd on DID",
       "summary": "Find Driver by DID",
       "method": "GET",

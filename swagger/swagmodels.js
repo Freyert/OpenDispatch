@@ -1,26 +1,25 @@
 exports.models = {
-    "Rider": {
-      "id": "Rider",
-      "required": ["id", "firstName", "lastName"],
-      "properties": {
-        "pid": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Category unique identifier",
-          "minimum": "0.0",
-          "maximum": "4294967295.0"
-        },
-        "firstName": {
-                "type": "string",
-                "description": "Rider's first name"
-        },
-        "lastName": {
-                "type": "string",
-                "description": "Rider's last name"
-        }
+  "Rider": {
+    "id": "Rider",
+    "required": ["id", "firstName", "lastName"],
+    "properties": {
+      "pid": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Category unique identifier",
+        "minimum": "0.0",
+        "maximum": "4294967295.0"
+      },
+      "firstName": {
+              "type": "string",
+              "description": "Rider's first name"
+      },
+      "lastName": {
+              "type": "string",
+              "description": "Rider's last name"
       }
     }
-	},
+  },
   "Position": {
     "time": {
       "type": "string",
@@ -39,7 +38,7 @@ exports.models = {
     }
   },
   "Driver": {
-    "id": "Rider",
+    "id": "Driver",
     "required": ["did", "firstName", "lastName",
                  "checkIn", "checkOut", "weeklyHours"],
     "properties": {
@@ -66,16 +65,18 @@ exports.models = {
       "checkOut": {
         "type": "string",
         "format": "date-time",
-        "description": "The time a driver signed out from work last."
-                      + "NULL if currently driving."
+        "description": "The time a driver signed out from work last. \
+          NULL if currently driving."
       },
       "weeklyHours": {
         "type": "integer",
         "format": "int32",
-        "description": "Number of hours a driver has driven during a week."
+        "description": "Number of hours a driver has driven during a week.",
         "min": "0.0",
         "max": "60"
-	  },
+      }
+    }
+  },
    "Ride": {
       "id": "Ride",
       "required": ["pid", "firstName", "lastName", "start"],

@@ -5,11 +5,23 @@ var swagger = require("swagger-node-express");
 var swagmodels = require("./swagger/swagmodels.js");
 var mongoose = require("mongoose");
 
-//Resources and Models
+
+/* TODO
+  Set an index.js in the resources and Models directory that will suck
+  all of these modules into one object. (questionable)
+
+  Or perhaps work in such a way that they configure everything
+  outside of this index file. (warmer)
+*/
+
+//Resources
 var swaggerPath = "./swagger/";
-var modelPath = "./models/";
 var riderResource = require(swaggerPath + "riderResource.js");
 var driverResource = require(swaggerPath + "driverResource.js");
+var rideResource = require(swaggerPath + 'rideResource');
+
+//Models
+var modelPath = "./models/";
 var riderModel = require(modelPath + "rider.js");
 var driverModel = require(modelPath + "drivers.js");
 var rideModel = require(modelPath + "ride.js");
@@ -52,21 +64,19 @@ db.once('open', function() {
         console.log("DB connected");
         //REST ROUTES
         var Rider = riderModel(mongoose);
-        swagger.addGet(swagsources.findRiderById(swagger, Rider));
-        swagger.addPost(swagsources.postRider(swagger, Rider));
-        swagger.addPost(swagsources.postRide(swagger, Ride, Rider));
+        swagger.addGet(riderResource.findById(swagger, Rider));
+        swagger.addPost(riderResource.post(swagger, Rider));
 
 
         var Driver = driverModel(mongoose);
         swagger.addGet(driverResource.findById(swagger, Driver));
-        swagger.addGet(riderResource.findById(swagger, Rider));
-        swagger.addPost(riderResource.postRider(swagger, Rider));
 
 
         var Ride = rideModel(mongoose);
-        swagger.addGet(swagsources.getRides(swagger, Ride));
-        swagger.addGet(swagsources.getRideByRiderId(swagger, Ride));
-        swagger.addDelete(swagsources.endRide(swagger, Ride));
+        swagger.addGet(rideResource.getAll(swagger, Ride));
+        swagger.addGet(rideResource.getByRiderId(swagger, Ride));
+        swagger.addPost(rideResource.post(swagger, Ride, Rider));
+        swagger.addDelete(rideResource.end(swagger, Ride));
 
         //HOST CONFIGURATION
         swagger.configureSwaggerPaths("", "/api-docs", "");
