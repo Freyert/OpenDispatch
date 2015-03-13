@@ -4,8 +4,7 @@
   "description": "A dispatching system that efficiently matches drivers with riders.",
   "main": "index.js",
   "scripts": {
-    "start:client": "beefy static/backbone/riderApp/index.js:static/rider.js --live",
-    "start:dispatch": "beefy static/backbone/dispatchApp/index.js:static/dispatch.js --live",
+    "beefy": "beefy static/backbone/riderApp/index.js:static/rider.js static/backbone/dispatchApp/index.js:static/dispatch.js --live",
     "test": "node ./test/conf.js"
   },
   "repository": {
