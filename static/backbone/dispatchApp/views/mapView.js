@@ -17,12 +17,16 @@ module.exports = Backbone.View.extend({
         mapOptions);
       this.render = this.render.bind(this, google, map);
       this.center = this.center.bind(this, map);
-      //google.map.event.addDomListener(window, 'load', initialize);
-      this.collection.on('sync', this.render, this);
-      this.collection.on('change:selected', this.center, this);
+      this.initListening();
       this.render();//in case sync already happened.
     }.bind(this);
     GoogleMapLoader.load(init);
+  },
+
+  initListening: function () {
+    this.collection.on('sync', this.render, this);
+    this.collection.on('change:selected', this.center, this);
+    this.collection.on('destroy', this.removeMarker, this);
   },
 
   render: function(google, map) {
@@ -34,7 +38,7 @@ module.exports = Backbone.View.extend({
         map: map,
         title: ride.get("firstName")
       });
-      console.log(marker);
+      ride.set('marker', marker);
     });
   },
 
@@ -44,5 +48,9 @@ module.exports = Backbone.View.extend({
     var latLng = { lat: latitude, lng: longitude };
     map.panTo(latLng);
     map.setZoom(15);
+  },
+
+  removeMarker: function(model) {
+    model.get('marker').setMap(null);//Delets marker from the map.
   }
 });

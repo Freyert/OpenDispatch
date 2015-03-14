@@ -60,7 +60,7 @@ exports.end = function (swagger, Ride) {
     "action": function(req, res) {
       Ride.remove({pid: parseInt(req.params.riderId) }, function(err, result) {
         if (result) {
-          res.status(200).end();
+          res.status(200).end('{}');
         }
         else {
           res.send(err);
@@ -105,7 +105,7 @@ exports.post = function (swagger, Ride, Rider) {
               res.send(err);
             }
             else {
-              res.status(200).end();
+              res.status(200).end('{}');
             }
           });
         } else {

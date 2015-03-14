@@ -8,6 +8,7 @@ var $ = require('jquery');
 function config() {
   //AJAX
   $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
+    console.log(arguments);
     alert(thrownError);
   });
 }

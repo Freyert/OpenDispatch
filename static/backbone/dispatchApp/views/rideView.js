@@ -7,11 +7,14 @@ Backbone.$ = $;
 var template = "<strong><%= pid %></strong>: \
   <%= firstName + ' ' + lastName %> ";
 
+var deleteButton = '<button type="button">DELETE</button>'
+
 module.exports = Backbone.View.extend({
   tagName: 'li',
   template: _.template(template),
   events: {
-    "click": "select"
+    "click": "select",
+    "click button": "deleteModel"
   },
   initialize: function() {
     this.render();
@@ -24,5 +27,18 @@ module.exports = Backbone.View.extend({
   select: function() {
     this.$el.toggleClass('selected');
     this.model.set('selected', !this.model.get('selected'));
+    this.model.get('selected') ? this.$el.append(deleteButton) :
+                                 this.$el.children('button').remove();
+  },
+
+  deleteModel: function() {
+    var tearDown = this.tearDown.bind(this);
+    this.model.destroy({success: tearDown});
+  },
+
+  tearDown: function(model, response) {
+    console.log(response);
+    console.log(this);
+    this.remove();
   }
 });
